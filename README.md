@@ -1,74 +1,73 @@
-# Anime Threads — Task 1: Simple E-commerce Store
+# Anime Threads — Anime T-Shirts & Pants Store
 
-A full-stack anime-themed e-commerce store (T-shirts + Pants) built with **HTML/CSS/JavaScript** frontend and an **Express.js (Node.js)** backend.
+A full-stack e-commerce store (Task 1, CodeAlpha Full Stack Development internship) for anime-themed t-shirts and pants — built with Node.js/Express on the backend and vanilla HTML/CSS/JavaScript on the frontend.
 
-## Features (matches the task brief)
-- Product listing with category filter (T-Shirt / Pants) and search
-- Product details page with size selection, quantity picker, stock display
-- Shopping cart (add / update qty / remove / view total) — stored server-side per session
-- User registration & login (passwords hashed with bcrypt)
-- Order processing / checkout with shipping address + payment method, "My Orders" history
-- Simple JSON-file database for products, users, and orders (no external DB required)
+## 🔗 Live Demo
 
-## Tech Stack
-- Frontend: vanilla HTML, CSS, JavaScript (fetch API)
-- Backend: Express.js (Node.js)
-- Auth: express-session + bcryptjs
-- "Database": JSON files in `/data` (products.json, users.json, orders.json)
+👉 https://codealpha-animethreadsstore.onrender.com
 
-## How to Run
+> Hosted on Render's free tier — the app may take ~50 seconds to wake up on first load if it's been inactive.
 
-1. Make sure you have **Node.js** installed (v16+).
-2. Open a terminal in this folder and install dependencies:
-   ```
-   npm install
-   ```
-3. Start the server:
-   ```
-   npm start
-   ```
-4. Open your browser at:
-   ```
-   http://localhost:3000
-   ```
+## Features
 
-## Project Structure
-```
+- **Product listing** — browse all products with category filter (T-Shirts / Pants) and search
+- **Product details page** — size selector, quantity picker, live stock count
+- **Shopping cart** — add, update, and remove items with a live running total
+- **Order processing** — checkout with shipping address and payment method, plus order history
+- **User registration/login** — secure password hashing (bcrypt) with session-based authentication
+- **Database** — lightweight JSON file storage for products, users, and orders (no setup required)
+
+## Tech stack
+
+- **Backend:** Node.js, Express, bcrypt, express-session
+- **Database:** JSON file store (`data/*.json`)
+- **Frontend:** vanilla HTML/CSS/JavaScript
+
+## Project structure
 anime-store/
-├── server.js              # Express server + all API routes
-├── package.json
+├── server.js              # Express app and routes
 ├── data/
-│   ├── products.json      # 12 anime t-shirts & pants (pre-loaded)
-│   ├── users.json          # created automatically on first run
-│   └── orders.json         # created automatically on first run
+│   ├── products.json      # Product catalog
+│   ├── users.json         # Registered users
+│   └── orders.json        # Placed orders
 └── public/
-    ├── index.html          # product listing + filters/search
-    ├── product.html        # product detail page
-    ├── cart.html           # cart + checkout modal
-    ├── login.html
-    ├── register.html
-    ├── orders.html         # order history
-    ├── css/style.css
-    └── js/api.js           # shared fetch helper + navbar
-```
+├── index.html          # Homepage / product listing
+├── product.html        # Product detail page
+├── cart.html           # Shopping cart
+├── login.html           # Login page
+├── register.html        # Registration page
+├── orders.html          # Order history
+├── css/style.css
+└── js/api.js
 
-## API Endpoints
-| Method | Route | Description |
-|---|---|---|
-| GET | /api/products | List products (supports ?category= & ?q=) |
-| GET | /api/products/:id | Single product detail |
-| POST | /api/register | Create account |
-| POST | /api/login | Log in |
-| POST | /api/logout | Log out |
-| GET | /api/me | Current logged-in user |
-| GET | /api/cart | View cart |
-| POST | /api/cart/add | Add item to cart |
-| POST | /api/cart/update | Update item quantity |
-| POST | /api/cart/remove | Remove item |
-| POST | /api/orders | Place order (requires login) |
-| GET | /api/orders | View your order history (requires login) |
+## Running it locally
 
-## Notes / Next Steps (optional improvements)
-- Swap the JSON file storage for a real database (MongoDB/PostgreSQL) if you need persistence at scale.
-- Add product image upload instead of using placeholder Unsplash URLs.
-- Add an admin panel to add/edit products and update order status.
+The server starts on **http://localhost:3000** and serves both the API and the frontend, so just open that URL in your browser — no separate frontend server needed.
+
+## How to use it
+
+1. Browse products on the homepage, filter by category, or search.
+2. Click a product to view details, choose a size and quantity.
+3. Add items to your cart and review the total.
+4. Register an account (or log in if you already have one).
+5. Checkout with your shipping address and payment method to place an order.
+6. View your past orders on the Orders page.
+
+## Notes for submission
+
+- This repo is named `CodeAlpha_AnimeThreadsStore` per the internship's GitHub naming convention.
+- `data/` files are seeded with sample anime product data; user/order data is created as people interact with the live demo.
+- The internship instructions ask interns to share a short video walkthrough on LinkedIn with the repo link, and to submit through the official form.
+
+## 🙏 Acknowledgment
+
+Thank you **CodeAlpha** for this incredible opportunity to learn full stack development through real-world projects!
+
+---
+
+**Connect with me:**
+
+- LinkedIn: [Aditya Kanifnath Mulay](https://www.linkedin.com/in/aditya-kanifnath-mulay-49558734a/)
+- GitHub: [@AdityaMulay727](https://github.com/AdityaMulay727)
+
+CodeAlpha Full Stack Development internship — Task 1.
