@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Anime Threads — Anime T-Shirts & Pants</title>
+<link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+<nav class="navbar" id="navbar"></nav>
+
+<section class="hero">
+  <h1>Wear Your <span>Favorite Anime</span></h1>
+  <p>Premium t-shirts & pants inspired by Naruto, Demon Slayer, One Piece, JJK & more</p>
+</section>
+
+<div class="filters" id="filters">
+  <button class="filter-btn active" data-cat="All">All</button>
+  <button class="filter-btn" data-cat="T-Shirt">T-Shirts</button>
+  <button class="filter-btn" data-cat="Pants">Pants</button>
+</div>
+
+<div style="text-align:center; padding-bottom: 10px;">
+  <div class="search-box" style="display:inline-flex;">
+    <input id="searchInput" placeholder="Search products..." />
+  </div>
+</div>
+
+<div class="grid" id="grid"></div>
+
+<div class="footer">© 2026 Anime Threads — Task 1: Simple E-commerce Store</div>
+
+<script src="/js/api.js"></script>
+<script>
+let currentCat = 'All';
+let currentQuery = '';
+
+async function loadProducts() {
+  const params = new URLSearchParams();
+  if (currentCat !== 'All') params.set('category', currentCat);
+  if (currentQuery) params.set('q', currentQuery);
+  const products = await api.get('/api/products?' + params.toString());
+  const grid = document.getElementById('grid');
+  if (!products.length) {
+    grid.innerHTML = `<div class="empty-state">No products found 😢</div>`;
+    return;
+  }
+  grid.innerHTML = products.map(p => `
+    <div class="card" onclick="window.location.href='/product.html?id=${p.id}'">
+      <img src="${p.image}" alt="${p.name}" />
+      <div class="card-body">
+        <div class="tag">${p.category}</div>
+        <h3>${p.name}</h3>
+        <div class="price">₹${p.price}</div>
+        <div class="stock">${p.stock > 0 ? p.stock + ' in stock' : 'Out of stock'}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentCat = btn.dataset.cat;
+    loadProducts();
+  });
+});
+
+let searchTimer;
+document.getElementById('searchInput').addEventListener('input', (e) => {
+  clearTimeout(searchTimer);
+  searchTimer = setTimeout(() => {
+    currentQuery = e.target.value;
+    loadProducts();
+  }, 250);
+});
+
+renderNavbar();
+loadProducts();
+</script>
+</body>
+</html>

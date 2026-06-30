@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sign Up — Anime Threads</title>
+<link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+<nav class="navbar" id="navbar"></nav>
+
+<div class="form-wrap">
+  <h2>Create Account</h2>
+  <div class="error-msg" id="errorMsg" style="display:none;"></div>
+  <div class="form-group">
+    <label>Full Name</label>
+    <input type="text" id="name" placeholder="Goku Son" />
+  </div>
+  <div class="form-group">
+    <label>Email</label>
+    <input type="email" id="email" placeholder="you@example.com" />
+  </div>
+  <div class="form-group">
+    <label>Password</label>
+    <input type="password" id="password" placeholder="At least 6 characters" />
+  </div>
+  <button class="btn full" id="registerBtn">Sign Up</button>
+  <div class="form-footer">Already have an account? <a href="/login.html">Log in</a></div>
+</div>
+
+<script src="/js/api.js"></script>
+<script>
+document.getElementById('registerBtn').addEventListener('click', async () => {
+  const name = document.getElementById('name').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const password = document.getElementById('password').value;
+  const errDiv = document.getElementById('errorMsg');
+  errDiv.style.display = 'none';
+
+  if (password.length < 6) {
+    errDiv.textContent = 'Password must be at least 6 characters.';
+    errDiv.style.display = 'block';
+    return;
+  }
+
+  try {
+    await api.post('/api/register', { name, email, password });
+    window.location.href = '/index.html';
+  } catch (e) {
+    errDiv.textContent = e.message;
+    errDiv.style.display = 'block';
+  }
+});
+
+renderNavbar();
+</script>
+</body>
+</html>

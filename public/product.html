@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Product Details — Anime Threads</title>
+<link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+<nav class="navbar" id="navbar"></nav>
+
+<div class="detail-wrap" id="detailWrap">
+  <div class="empty-state">Loading product...</div>
+</div>
+
+<div class="footer">© 2026 Anime Threads</div>
+
+<script src="/js/api.js"></script>
+<script>
+const params = new URLSearchParams(window.location.search);
+const productId = params.get('id');
+let selectedSize = null;
+let qty = 1;
+
+async function loadProduct() {
+  const wrap = document.getElementById('detailWrap');
+  try {
+    const p = await api.get('/api/products/' + productId);
+    if (p.error) throw new Error(p.error);
+    selectedSize = p.sizes[0];
+
+    wrap.innerHTML = `
+      <img src="${p.image}" alt="${p.name}" />
+      <div class="detail-info">
+        <div class="tag">${p.category}</div>
+        <h1>${p.name}</h1>
+        <div class="price">₹${p.price}</div>
+        <p class="desc">${p.description}</p>
+
+        <div><strong>Color:</strong> ${p.color}</div><br/>
+
+        <div><strong>Select Size:</strong></div>
+        <div class="size-row" id="sizeRow">
+          ${p.sizes.map(s => `<div class="size-chip ${s === selectedSize ? 'active' : ''}" data-size="${s}">${s}</div>`).join('')}
+        </div>
+
+        <div><strong>Quantity:</strong></div>
+        <div class="qty-row">
+          <button id="qtyMinus">−</button>
+          <span id="qtyVal">1</span>
+          <button id="qtyPlus">+</button>
+          <span style="color: var(--text-dim); font-size: 0.85rem;">${p.stock} in stock</span>
+        </div>
+
+        <button class="btn full" id="addToCartBtn" ${p.stock === 0 ? 'disabled' : ''}>
+          ${p.stock === 0 ? 'Out of Stock' : 'Add to Cart'}
+        </button>
+      </div>
+    `;
+
+    document.querySelectorAll('.size-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        document.querySelectorAll('.size-chip').forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        selectedSize = chip.dataset.size;
+      });
+    });
+
+    document.getElementById('qtyMinus').addEventListener('click', () => {
+      qty = Math.max(1, qty - 1);
+      document.getElementById('qtyVal').textContent = qty;
+    });
+    document.getElementById('qtyPlus').addEventListener('click', () => {
+      qty = Math.min(p.stock, qty + 1);
+      document.getElementById('qtyVal').textContent = qty;
+    });
+
+    document.getElementById('addToCartBtn').addEventListener('click', async () => {
+      try {
+        await api.post('/api/cart/add', { productId: p.id, size: selectedSize, qty });
+        toast('Added to cart! 🛒');
+        renderNavbar();
+      } catch (e) {
+        toast(e.message, true);
+      }
+    });
+
+  } catch (e) {
+    wrap.innerHTML = `<div class="empty-state">Product not found.</div>`;
+  }
+}
+
+renderNavbar();
+loadProduct();
+</script>
+</body>
+</html>

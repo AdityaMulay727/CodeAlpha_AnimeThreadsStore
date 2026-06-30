@@ -1,0 +1,21 @@
+[
+  {
+    "id": 1782823426206,
+    "userId": 1782823411258,
+    "userEmail": "aditya@gmail.com",
+    "items": [
+      {
+        "productId": 2,
+        "name": "Attack on Titan Wings of Freedom Tee",
+        "size": "L",
+        "qty": 2,
+        "price": 849
+      }
+    ],
+    "total": 1698,
+    "address": "fsf",
+    "paymentMethod": "Cash on Delivery",
+    "status": "Processing",
+    "createdAt": "2026-06-30T12:43:46.206Z"
+  }
+]

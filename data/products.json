@@ -1,0 +1,134 @@
+[
+  {
+    "id": 1,
+    "name": "Naruto Akatsuki Cloud Tee",
+    "category": "T-Shirt",
+    "price": 799,
+    "stock": 25,
+    "color": "Black",
+    "sizes": ["S", "M", "L", "XL"],
+    "image": "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600",
+    "description": "Premium cotton t-shirt featuring the iconic Akatsuki red cloud print. Soft fabric, perfect for everyday anime fans."
+  },
+  {
+    "id": 2,
+    "name": "Attack on Titan Wings of Freedom Tee",
+    "category": "T-Shirt",
+    "price": 849,
+    "stock": 18,
+    "color": "White",
+    "sizes": ["S", "M", "L", "XL", "XXL"],
+    "image": "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=600",
+    "description": "Show your scout regiment pride with this Wings of Freedom graphic tee, made from breathable combed cotton."
+  },
+  {
+    "id": 3,
+    "name": "Demon Slayer Tanjiro Hanafuda Tee",
+    "category": "T-Shirt",
+    "price": 799,
+    "stock": 30,
+    "color": "Green",
+    "sizes": ["S", "M", "L", "XL"],
+    "image": "https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=600",
+    "description": "Tanjiro's signature checkered hanafuda earring design printed on a relaxed-fit tee."
+  },
+  {
+    "id": 4,
+    "name": "One Piece Straw Hat Crew Tee",
+    "category": "T-Shirt",
+    "price": 749,
+    "stock": 22,
+    "color": "Red",
+    "sizes": ["S", "M", "L", "XL"],
+    "image": "https://images.unsplash.com/photo-1576871337622-98d48d1cf531?w=600",
+    "description": "Sail with the Straw Hat crew in this bold graphic tee featuring the Jolly Roger emblem."
+  },
+  {
+    "id": 5,
+    "name": "Jujutsu Kaisen Domain Expansion Tee",
+    "category": "T-Shirt",
+    "price": 829,
+    "stock": 20,
+    "color": "Black",
+    "sizes": ["M", "L", "XL"],
+    "image": "https://images.unsplash.com/photo-1554568218-0f1715e72254?w=600",
+    "description": "Limited edition tee featuring Gojo's Infinite Void domain expansion artwork."
+  },
+  {
+    "id": 6,
+    "name": "My Hero Academia Plus Ultra Tee",
+    "category": "T-Shirt",
+    "price": 769,
+    "stock": 27,
+    "color": "Navy",
+    "sizes": ["S", "M", "L", "XL", "XXL"],
+    "image": "https://images.unsplash.com/photo-1593030761757-71fae45fa0e7?w=600",
+    "description": "Deku's All Might inspired tee with 'Plus Ultra' typography print."
+  },
+  {
+    "id": 7,
+    "name": "Akatsuki Cloud Cargo Pants",
+    "category": "Pants",
+    "price": 1399,
+    "stock": 15,
+    "color": "Black",
+    "sizes": ["28", "30", "32", "34", "36"],
+    "image": "https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=600",
+    "description": "Streetwear cargo pants with subtle Akatsuki cloud embroidery and multiple utility pockets."
+  },
+  {
+    "id": 8,
+    "name": "Tokyo Ghoul Kagune Joggers",
+    "category": "Pants",
+    "price": 1299,
+    "stock": 18,
+    "color": "Dark Grey",
+    "sizes": ["28", "30", "32", "34", "36"],
+    "image": "https://images.unsplash.com/photo-1552902865-b72c031ac5ea?w=600",
+    "description": "Comfortable tapered joggers with an elastic waistband and Tokyo Ghoul side print."
+  },
+  {
+    "id": 9,
+    "name": "Demon Slayer Corps Uniform Pants",
+    "category": "Pants",
+    "price": 1349,
+    "stock": 12,
+    "color": "Charcoal",
+    "sizes": ["28", "30", "32", "34"],
+    "image": "https://images.unsplash.com/photo-1542272604-787c3835535d?w=600",
+    "description": "Inspired by the Demon Slayer Corps uniform, these straight-fit pants blend style and comfort."
+  },
+  {
+    "id": 10,
+    "name": "One Piece Wano Arc Track Pants",
+    "category": "Pants",
+    "price": 1199,
+    "stock": 20,
+    "color": "Black/Red",
+    "sizes": ["S", "M", "L", "XL"],
+    "image": "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=600",
+    "description": "Lightweight track pants featuring Wano arc inspired side stripe artwork."
+  },
+  {
+    "id": 11,
+    "name": "Jujutsu Kaisen Cursed Energy Joggers",
+    "category": "Pants",
+    "price": 1449,
+    "stock": 10,
+    "color": "Black",
+    "sizes": ["28", "30", "32", "34", "36"],
+    "image": "https://images.unsplash.com/photo-1565084888279-aca607ecce0c?w=600",
+    "description": "Premium fleece joggers with cursed energy print detailing and zippered pockets."
+  },
+  {
+    "id": 12,
+    "name": "Naruto Sage Mode Cargo Pants",
+    "category": "Pants",
+    "price": 1399,
+    "stock": 14,
+    "color": "Olive",
+    "sizes": ["28", "30", "32", "34", "36"],
+    "image": "https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=600",
+    "description": "Rugged cargo pants featuring Sage Mode eye patches and reinforced stitching."
+  }
+]

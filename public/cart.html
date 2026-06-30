@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Your Cart — Anime Threads</title>
+<link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+<nav class="navbar" id="navbar"></nav>
+
+<div class="cart-wrap">
+  <h2 style="margin: 20px 0;">🛒 Your Cart</h2>
+  <div id="cartItems"></div>
+  <div class="cart-total" id="cartTotal"></div>
+  <button class="btn full" id="checkoutBtn" style="display:none;">Proceed to Checkout</button>
+</div>
+
+<!-- Checkout Modal -->
+<div id="checkoutModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:100; align-items:center; justify-content:center;">
+  <div class="form-wrap" style="margin:0;">
+    <h2>Checkout</h2>
+    <div class="error-msg" id="checkoutError" style="display:none;"></div>
+    <div class="form-group">
+      <label>Shipping Address</label>
+      <textarea id="address" rows="3" placeholder="House no, street, city, pincode"></textarea>
+    </div>
+    <div class="form-group">
+      <label>Payment Method</label>
+      <select id="paymentMethod">
+        <option>Cash on Delivery</option>
+        <option>UPI</option>
+        <option>Credit/Debit Card</option>
+      </select>
+    </div>
+    <button class="btn full" id="placeOrderBtn">Place Order</button>
+    <button class="btn secondary full" style="margin-top:10px;" id="closeModalBtn">Cancel</button>
+  </div>
+</div>
+
+<div class="footer">© 2026 Anime Threads</div>
+
+<script src="/js/api.js"></script>
+<script>
+let cartData = null;
+
+async function loadCart() {
+  cartData = await api.get('/api/cart');
+  const itemsDiv = document.getElementById('cartItems');
+  const totalDiv = document.getElementById('cartTotal');
+  const checkoutBtn = document.getElementById('checkoutBtn');
+
+  if (!cartData.items.length) {
+    itemsDiv.innerHTML = `<div class="empty-state">Your cart is empty. <br/><br/><a href="/index.html" class="btn">Continue Shopping</a></div>`;
+    totalDiv.innerHTML = '';
+    checkoutBtn.style.display = 'none';
+    return;
+  }
+
+  itemsDiv.innerHTML = cartData.items.map(item => `
+    <div class="cart-item">
+      <img src="${item.product.image}" alt="${item.product.name}" />
+      <div class="info">
+        <h4>${item.product.name}</h4>
+        <div class="meta">Size: ${item.size} • ₹${item.product.price} each</div>
+        <div class="qty-controls">
+          <button onclick="updateQty(${item.productId}, '${item.size}', ${item.qty - 1})">−</button>
+          <span>${item.qty}</span>
+          <button onclick="updateQty(${item.productId}, '${item.size}', ${item.qty + 1})">+</button>
+        </div>
+        <div class="remove-link" onclick="removeItem(${item.productId}, '${item.size}')">Remove</div>
+      </div>
+      <div style="font-weight:700;">₹${item.product.price * item.qty}</div>
+    </div>
+  `).join('');
+
+  totalDiv.innerHTML = `Total: <span>₹${cartData.total}</span>`;
+  checkoutBtn.style.display = 'block';
+}
+
+async function updateQty(productId, size, qty) {
+  if (qty < 1) return removeItem(productId, size);
+  await api.post('/api/cart/update', { productId, size, qty });
+  loadCart();
+  renderNavbar();
+}
+
+async function removeItem(productId, size) {
+  await api.post('/api/cart/remove', { productId, size });
+  toast('Item removed.');
+  loadCart();
+  renderNavbar();
+}
+
+document.getElementById('checkoutBtn').addEventListener('click', async () => {
+  const { user } = await api.get('/api/me');
+  if (!user) {
+    toast('Please log in to checkout.', true);
+    setTimeout(() => window.location.href = '/login.html', 1000);
+    return;
+  }
+  document.getElementById('checkoutModal').style.display = 'flex';
+});
+
+document.getElementById('closeModalBtn').addEventListener('click', () => {
+  document.getElementById('checkoutModal').style.display = 'none';
+});
+
+document.getElementById('placeOrderBtn').addEventListener('click', async () => {
+  const address = document.getElementById('address').value.trim();
+  const paymentMethod = document.getElementById('paymentMethod').value;
+  const errDiv = document.getElementById('checkoutError');
+  errDiv.style.display = 'none';
+
+  if (!address) {
+    errDiv.textContent = 'Please enter a shipping address.';
+    errDiv.style.display = 'block';
+    return;
+  }
+
+  try {
+    await api.post('/api/orders', { address, paymentMethod });
+    toast('Order placed successfully! 🎉');
+    document.getElementById('checkoutModal').style.display = 'none';
+    setTimeout(() => window.location.href = '/orders.html', 1000);
+  } catch (e) {
+    errDiv.textContent = e.message;
+    errDiv.style.display = 'block';
+  }
+});
+
+renderNavbar();
+loadCart();
+</script>
+</body>
+</html>

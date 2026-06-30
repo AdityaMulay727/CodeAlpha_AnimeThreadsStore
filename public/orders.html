@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>My Orders — Anime Threads</title>
+<link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+<nav class="navbar" id="navbar"></nav>
+
+<div class="cart-wrap">
+  <h2 style="margin: 20px 0;">📦 My Orders</h2>
+  <div id="ordersList"></div>
+</div>
+
+<div class="footer">© 2026 Anime Threads</div>
+
+<script src="/js/api.js"></script>
+<script>
+async function loadOrders() {
+  const { user } = await api.get('/api/me');
+  const listDiv = document.getElementById('ordersList');
+  if (!user) {
+    listDiv.innerHTML = `<div class="empty-state">Please <a href="/login.html" class="btn">log in</a> to view your orders.</div>`;
+    return;
+  }
+
+  const res = await fetch('/api/orders');
+  const orders = await res.json();
+
+  if (!orders.length) {
+    listDiv.innerHTML = `<div class="empty-state">No orders yet. <br/><br/><a href="/index.html" class="btn">Start Shopping</a></div>`;
+    return;
+  }
+
+  listDiv.innerHTML = orders.map(o => `
+    <div class="order-card">
+      <div class="order-head">
+        <span>Order #${o.id}</span>
+        <span class="status-pill">${o.status}</span>
+      </div>
+      <div style="font-size:0.85rem; color:var(--text-dim); margin-bottom:10px;">
+        ${new Date(o.createdAt).toLocaleString()} • ${o.paymentMethod}
+      </div>
+      ${o.items.map(i => `
+        <div class="order-line">
+          <span>${i.name} (${i.size}) × ${i.qty}</span>
+          <span>₹${i.price * i.qty}</span>
+        </div>
+      `).join('')}
+      <div style="border-top:1px solid var(--border); margin-top:10px; padding-top:10px; display:flex; justify-content:space-between; font-weight:700;">
+        <span>Total</span><span>₹${o.total}</span>
+      </div>
+      <div style="font-size:0.8rem; color:var(--text-dim); margin-top:8px;">Shipping to: ${o.address}</div>
+    </div>
+  `).join('');
+}
+
+renderNavbar();
+loadOrders();
+</script>
+</body>
+</html>
